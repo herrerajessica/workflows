@@ -1,7 +1,8 @@
 import json
 import boto3
+import os
+dynamodb = boto3.resource('dynamodb', region_name=os.getenv('AWS_REGION', 'us-east-1'))
 
-dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 table = dynamodb.Table('VisitorCounterTable')  # Nombre de la tabla actualizado
 
 def lambda_handler(event, context):
