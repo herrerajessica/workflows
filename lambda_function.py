@@ -2,13 +2,13 @@ import json
 import boto3
 import os
 
-# Especificar la región explícitamente
-region = os.getenv('AWS_REGION', 'us-east-1')
-dynamodb = boto3.resource('dynamodb', region_name=region)
-table = dynamodb.Table('VisitorCounterTable')
-
 def lambda_handler(event, context):
     try:
+        # 🔴 Mover la inicialización dentro de la función
+        region = os.getenv('AWS_REGION', 'us-east-1')
+        dynamodb = boto3.resource('dynamodb', region_name=region)
+        table = dynamodb.Table('VisitorCounterTable')
+
         response = table.update_item(
             Key={'id': 'visitor_count'},
             UpdateExpression='ADD visits :inc',
