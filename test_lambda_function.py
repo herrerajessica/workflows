@@ -6,6 +6,7 @@ from moto import mock_dynamodb
 from lambda_function import lambda_handler
 
 @pytest.fixture
+@mock_dynamodb
 def setup_dynamodb():
     with mock_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
