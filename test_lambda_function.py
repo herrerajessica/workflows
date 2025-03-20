@@ -15,10 +15,8 @@ def setup_dynamodb():
             ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
         )
         table.put_item(Item={"id": "visitor_count", "visits": 0})
-        yield table  # Devuelve la tabla para que el test la use
+        yield table
 
-# 🔴 Agrega el decorador @mock_dynamodb al test para asegurarte de que moto parchea correctamente
-@mock_dynamodb
 def test_lambda_handler_get(setup_dynamodb):
     """Prueba que el contador de visitas se incrementa correctamente"""
     event = {"httpMethod": "GET"}
