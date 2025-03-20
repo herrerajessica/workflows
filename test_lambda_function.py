@@ -6,7 +6,7 @@ from lambda_function import lambda_handler
 
 @pytest.fixture
 def setup_dynamodb():
-    with mock_dynamodb():
+    with mock_aws():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
         table = dynamodb.create_table(
             TableName="VisitorCounterTable",
