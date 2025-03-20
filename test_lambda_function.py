@@ -2,11 +2,9 @@ import json
 import boto3
 import pytest
 from moto import mock_dynamodb
-
 from lambda_function import lambda_handler
 
 @pytest.fixture
-@mock_dynamodb
 def setup_dynamodb():
     with mock_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
@@ -17,8 +15,10 @@ def setup_dynamodb():
             ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
         )
         table.put_item(Item={"id": "visitor_count", "visits": 0})
-        yield table
+        yield table  # Devuelve la tabla para que el test la use
 
+# 🔴 Agrega el decorador @mock_dynamodb al test para asegurarte de que moto parchea correctamente
+@mock_dynamodb
 def test_lambda_handler_get(setup_dynamodb):
     """Prueba que el contador de visitas se incrementa correctamente"""
     event = {"httpMethod": "GET"}
@@ -26,6 +26,6 @@ def test_lambda_handler_get(setup_dynamodb):
     print("Lambda response:", response)  # Ver la respuesta en los logs
 
     body = json.loads(response["body"])
-    
+
     assert response["statusCode"] == 200, f"Error en Lambda: {response}"  # Mostrar error si falla
     assert "count" in body
