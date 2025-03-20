@@ -3,10 +3,10 @@ name: Run Lambda Tests
 on:
   push:
     branches:
-      - main
+      - main  # Se ejecutará en cada push a main
   pull_request:
     branches:
-      - main
+      - main  # Se ejecutará en cada PR a main
 
 jobs:
   test:
@@ -14,17 +14,17 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Clona el código del repo
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.13'  # Usa la versión más reciente de Python
 
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements.txt  # Instala las dependencias
 
       - name: Run tests with pytest
-        run: pytest test_lambda_function.py
+        run: pytest test_lambda_function.py  # Ejecuta las pruebas
