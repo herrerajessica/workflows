@@ -23,6 +23,11 @@ jobs:
 
     - name: Configure AWS region
       run: echo "AWS_REGION=us-east-1" >> $GITHUB_ENV  # Define la región antes de ejecutar cualquier comando
+      
+    - name: Set fake AWS credentials
+      run: |
+        echo "AWS_ACCESS_KEY_ID=fake" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=fake" >> $GITHUB_ENV
 
     - name: Install dependencies
       run: |
