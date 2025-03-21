@@ -2,12 +2,12 @@ import json
 import boto3
 import pytest
 
-from moto import mock_aws
+from moto import mock_dynamodb
 from lambda_function import lambda_handler
 
 @pytest.fixture
 def setup_dynamodb():
-    with mock_aws():
+    with mock_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
         table = dynamodb.create_table(
             TableName="VisitorCounterTable",
