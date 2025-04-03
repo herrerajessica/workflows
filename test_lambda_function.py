@@ -5,6 +5,7 @@ import pytest
 from moto import mock_dynamodb
 from lambda_function import lambda_handler
 
+
 @pytest.fixture
 def setup_dynamodb():
     with mock_dynamodb():
