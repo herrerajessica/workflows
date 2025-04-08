@@ -12,11 +12,11 @@ def setup_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
         table = dynamodb.create_table(
             TableName="VisitorCounterTable",
-            KeySchema=[{"AttributeName": "id", "KeyType": "HASH"}],
-            AttributeDefinitions=[{"AttributeName": "id", "AttributeType": "S"}],
+            KeySchema=[{"AttributeName": "ID", "KeyType": "HASH"}],
+            AttributeDefinitions=[{"AttributeName": "ID", "AttributeType": "S"}],
             ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
         )
-        table.put_item(Item={"id": "visitor_count", "visits": 0})
+        table.put_item(Item={"ID": "visitor_count", "visits": 0})
         yield table
 
 def test_lambda_handler_get(setup_dynamodb):
