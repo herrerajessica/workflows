@@ -8,10 +8,10 @@ def lambda_handler(event, context):
         # Inicializar DynamoDB dentro de la función
         region = os.getenv('AWS_REGION', 'us-east-1')
         dynamodb = boto3.resource('dynamodb', region_name=region)
-        table = dynamodb.Table('VisitorCounterTable')
+        table = dynamodb.Table('visitor-counter-table-sam')
 
         response = table.update_item(
-            Key={'ID': 'visitor_count'},
+            Key={'id': 'visitor_count'},
             UpdateExpression='ADD visits :inc',
             ExpressionAttributeValues={':inc': 1},
             ReturnValues='UPDATED_NEW'
