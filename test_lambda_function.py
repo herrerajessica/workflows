@@ -1,42 +1,41 @@
-import json
 import boto3
+import json
 import pytest
 from moto import mock_dynamodb
-from lambda_function import lambda_handler
+import lambda_function  # Asegúrate de que tu archivo se llame lambda_function.py
 
 @pytest.fixture
-@mock_dynamodb
 def setup_dynamodb():
     with mock_dynamodb():
-        dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
+        # Crear el recurso de DynamoDB en us-east-1
+        dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
 
-        # Tabla 1
-        table1 = dynamodb.create_table(
-            TableName="VisitorCounterTable",
-            KeySchema=[{"AttributeName": "ID", "KeyType": "HASH"}],
-            AttributeDefinitions=[{"AttributeName": "ID", "AttributeType": "S"}],
-            ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
-        )
-        table1.put_item(Item={"ID": "visitor_count", "visits": 0})
-
-        # Tabla 2
-        table2 = dynamodb.create_table(
+        # Crear la tabla necesaria
+        dynamodb.create_table(
             TableName="visitor-counter-table-sam",
-            KeySchema=[{"AttributeName": "id", "KeyType": "HASH"}],
-            AttributeDefinitions=[{"AttributeName": "id", "AttributeType": "S"}],
-            ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
+            KeySchema=[
+                {"AttributeName": "id", "KeyType": "HASH"}
+            ],
+            AttributeDefinitions=[
+                {"AttributeName": "id", "AttributeType": "S"}
+            ],
+            BillingMode="PAY_PER_REQUEST"
         )
-        table2.put_item(Item={"id": "visitor_count", "visits": 0})
 
-        yield  # Devuelve el entorno simulado listo para usarse
+        yield
 
-def test_lambda_handler_get(setup_dynamodb):
-    """Prueba que el contador de visitas se incrementa correctamente"""
-    event = {"httpMethod": "GET"}
-    response = lambda_handler(event, None)
-    print("Lambda response:", response)
+def test_lambda_handler(setup_dynamodb):
+    # Simular evento de API Gateway
+    event = {
+        "httpMethod": "GET",
+        "path": "/",
+        "headers": {},
+        "body": None
+    }
 
-    body = json.loads(response["body"])
+    result = lambda_function.lambda_handler(event, None)
+    body = json.loads(result["body"])
 
-    assert response["statusCode"] == 200, f"Error en Lambda: {response}"
+    assert result["statusCode"] == 200
+    assert "message" in body
     assert "count" in body
