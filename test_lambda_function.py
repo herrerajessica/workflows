@@ -1,28 +1,28 @@
 import boto3
 import json
 import pytest
-from moto import mock_dynamodb
+from moto import mock_dynamodb2
 import lambda_function  # Asegúrate de que tu archivo se llame lambda_function.py
 
 @pytest.fixture
+@mock_dynamodb2
 def setup_dynamodb():
-    with mock_dynamodb():
-        # Crear el recurso de DynamoDB en us-east-1
-        dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
+    # Crear el recurso de DynamoDB en us-east-1
+    dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
 
-        # Crear la tabla necesaria
-        dynamodb.create_table(
-            TableName="visitor-counter-table-sam",
-            KeySchema=[
-                {"AttributeName": "id", "KeyType": "HASH"}
-            ],
-            AttributeDefinitions=[
-                {"AttributeName": "id", "AttributeType": "S"}
-            ],
-            BillingMode="PAY_PER_REQUEST"
-        )
+    # Crear la tabla necesaria
+    dynamodb.create_table(
+        TableName="visitor-counter-table-sam",
+        KeySchema=[
+            {"AttributeName": "id", "KeyType": "HASH"}
+        ],
+        AttributeDefinitions=[
+            {"AttributeName": "id", "AttributeType": "S"}
+        ],
+        BillingMode="PAY_PER_REQUEST"
+    )
 
-        yield
+    yield
 
 def test_lambda_handler(setup_dynamodb):
     # Simular evento de API Gateway
