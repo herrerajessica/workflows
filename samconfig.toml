@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version = 0.1
 [default.deploy.parameters]
 stack_name = "visitor-counter-stack-sam"
@@ -7,3 +8,14 @@ region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+=======
+version = 0.1
+[default.deploy.parameters]
+stack_name = "visitor-counter-stack-sam"
+resolve_s3 = true
+s3_prefix = "visitor-counter-stack-sam"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+>>>>>>> adcd509 (Agregando despliegue automático con SAM)

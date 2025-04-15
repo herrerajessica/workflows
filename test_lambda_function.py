@@ -8,12 +8,18 @@ from lambda_function import lambda_handler
 
 @pytest.fixture
 def setup_dynamodb():
-    with mock_dynamodb():
+      with mock_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
         table = dynamodb.create_table(
+<<<<<<< HEAD
             TableName="VisitorCounterTable",
             KeySchema=[{"AttributeName": "ID", "KeyType": "HASH"}],
             AttributeDefinitions=[{"AttributeName": "ID", "AttributeType": "S"}],
+=======
+            TableName="visitor-counter-table-sam",
+            KeySchema=[{"AttributeName": "id", "KeyType": "HASH"}],
+            AttributeDefinitions=[{"AttributeName": "id", "AttributeType": "S"}],
+>>>>>>> adcd509 (Agregando despliegue automático con SAM)
             ProvisionedThroughput={"ReadCapacityUnits": 1, "WriteCapacityUnits": 1}
         )
         table.put_item(Item={"ID": "visitor_count", "visits": 0})

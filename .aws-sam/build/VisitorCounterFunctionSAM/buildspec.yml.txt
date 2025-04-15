@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: latest  # Usa la versión más reciente de Python
+    commands:
+      - pip install --upgrade pip
+      - pip install -r requirements.txt  # Instala las dependencias
+  build:
+    commands:
+      - pytest test_lambda_function.py  # Ejecuta las pruebas
+
+reports:
+  pytest_reports:
+    files:
+      - "test_output.xml"
+    base-directory: "test-reports"

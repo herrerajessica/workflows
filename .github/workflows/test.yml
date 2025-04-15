@@ -22,7 +22,7 @@ jobs:
         python-version: '3.11'
 
     - name: Configure AWS region
-      run: echo "AWS_REGION=us-east-1" >> $GITHUB_ENV  # Define la región antes de ejecutar cualquier comando
+      run: echo "AWS_REGION=us-east-1" >> $GITHUB_ENV
 
     - name: Set fake AWS credentials
       run: |
@@ -32,9 +32,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip uninstall -y moto  # Elimina cualquier versión instalada de moto
+        pip uninstall -y moto
         pip install -r requirements.txt
-        pip install "moto[all]==4.1.10"  # Instala una versión estable de moto
+        pip install "moto[all]==4.1.10"
+        pip install pytest  # 👈 esta línea es importante
 
     - name: Run tests with pytest
       run: pytest test_lambda_function.py
