@@ -1,10 +1,11 @@
 import json
 import boto3
 import pytest
-from moto import mock_dynamodb
+from moto import mock_dynamodb2
 from lambda_function import lambda_handler
 
 @pytest.fixture
+@mock_dynamodb2
 def setup_dynamodb():
     with mock_dynamodb():
         dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
