@@ -1,2 +1,1 @@
-
-moto
+moto[dynamodb2]==5.0.0
