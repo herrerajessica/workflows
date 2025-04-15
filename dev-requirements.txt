@@ -1,3 +1,2 @@
-pytest
-boto3
-moto[all]==4.1.12
+
+moto
