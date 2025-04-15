@@ -1,11 +1,11 @@
 import boto3
 import json
 import pytest
-from moto import mock_dynamodb
+from moto import mock_dynamodb2
 import lambda_function  # Asegúrate de que tu archivo se llame lambda_function.py
 
 @pytest.fixture
-@mock_dynamodb
+@mock_dynamodb2
 def setup_dynamodb():
     # Crear el recurso de DynamoDB en us-east-1
     dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
