@@ -20,7 +20,7 @@ def lambda_handler(event, context):
         # Convertir Decimal a int antes de serializar JSON
         return {
             "statusCode": 200,
-            "body": json.dumps({"message": "Visit updated", "count": int(response["Attributes"]["visits"])})
+            "body": json.dumps({"message": "Visits updated", "count": int(response["Attributes"]["visits"])})
         }
     
     except Exception as e:
