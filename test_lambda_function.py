@@ -7,7 +7,7 @@ import lambda_function
 @pytest.fixture
 def setup_dynamodb():
     with mock_dynamodb():
-        # Crear recurso simulado de DynamoDB
+        # Crear recursoss simulado de DynamoDB
         dynamodb = boto3.resource("dynamodb", region_name="us-east-1")
         # Crear tabla que tu función Lambda necesita
         table = dynamodb.create_table(
