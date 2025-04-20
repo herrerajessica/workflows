@@ -1,44 +1,44 @@
+
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  Visitor counter backend powered by AWS Lambda, API Gateway and DynamoDB
+Description: Visitor counter application using API Gateway, Lambda, and DynamoDB.
+
+Globals:
+  Function:
+    Timeout: 3
+  Api:
+    Cors:
+      AllowMethods: "'GET,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'https://jessicaherreraflores.com'"
 
 Resources:
   SamVisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      FunctionName: SamVisitorCounterFunction
       Handler: lambda_function.lambda_handler
       Runtime: python3.11
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: SamVisitorCounterTable
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLE_NAME: visitor-counter-table-sam
       Events:
         VisitorApi:
           Type: Api
           Properties:
             Path: /getVisitorCount
             Method: GET
-            Cors:
-                AllowMethods: "'GET,OPTIONS'"
-                AllowHeaders: "'Content-Type'"
-                AllowOrigin: "'https://jessicaherreraflores.com'"
 
   SamVisitorCounterTable:
-    Type: AWS::DynamoDB::Table
+    Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: SamVisitorCounterTable
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
+      TableName: visitor-counter-table-sam
+      PrimaryKey:
+        Name: id
+        Type: String
 
 Outputs:
   ApiUrl:
     Description: "API Gateway endpoint URL for Prod stage"
-    Value:
-      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount"
