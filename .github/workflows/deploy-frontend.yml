@@ -26,7 +26,8 @@ jobs:
 
     - name: Sync website to S3
       run: |
-        aws s3 sync ./ s3://bucketresumejessicamdc --delete
+        
+        aws s3 sync frontend/ s3://bucketresumejessicamdc --delete
 
     - name: Invalidate CloudFront cache
       run: |
