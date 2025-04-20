@@ -2,6 +2,15 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Serverless backend for visitor counter using HTTP API
 
+Globals:
+  Function:
+    Timeout: 3
+  Api:
+    Cors:
+      AllowMethods: "'GET,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'https://jessicaherreraflores.com'"
+
 Resources:
   VisitorApi:
     Type: AWS::Serverless::HttpApi
@@ -24,6 +33,9 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref SamVisitorCounterTable
+      Environment:
+        Variables:
+          TABLE_NAME: visitor-counter-table-sam
       Events:
         VisitorApiEvent:
           Type: HttpApi
@@ -33,15 +45,12 @@ Resources:
             ApiId: !Ref VisitorApi
 
   SamVisitorCounterTable:
-    Type: AWS::DynamoDB::Table
+    Type: AWS::Serverless::SimpleTable
     Properties:
       TableName: visitor-counter-table-sam
-      AttributeDefinitions:
-        - AttributeName: id
-          AttributeType: S
-      KeySchema:
-        - AttributeName: id
-          KeyType: HASH
+      PrimaryKey:
+        Name: id
+        Type: String
       BillingMode: PAY_PER_REQUEST
 
 Outputs:
