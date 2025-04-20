@@ -40,5 +40,5 @@ Resources:
 
 Outputs:
   ApiUrl:
-    Description: "URL pública de la API para el contador de visitas"
+    Description: "URL pública de la API para el contador de visitas SAM"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount"
