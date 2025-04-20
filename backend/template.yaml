@@ -1,12 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Visitor counter application using API Gateway (HTTP), Lambda, and DynamoDB.
+<<<<<<< HEAD
+Description: Visitorss counter application using API Gateway (HTTP), Lambda, and DynamoDB.
+=======
+Description: Cloud Resume Challenge - Visitor Counter
+>>>>>>> 2ab7e52 (Actualización en template.yaml: cambie al original que habia antes)
 
 Globals:
   Function:
     Timeout: 3
 
 Resources:
+<<<<<<< HEAD
   SamHttpVisitorApi:
     Type: AWS::Serverless::HttpApi
     Properties:
@@ -19,33 +24,53 @@ Resources:
         AllowOrigins:
           - https://jessicaherreraflores.com
 
+=======
+>>>>>>> 2ab7e52 (Actualización en template.yaml: cambie al original que habia antes)
   SamVisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
+<<<<<<< HEAD
       Handler: lambda_function.lambda_handler
       Runtime: python3.11
       Policies: AmazonDynamoDBFullAccess
       Environment:
         Variables:
           TABLE_NAME: visitor-counter-table-sam
+=======
+      FunctionName: SamVisitorCounterFunction
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: SamVisitorCounterTable
+>>>>>>> 2ab7e52 (Actualización en template.yaml: cambie al original que habia antes)
       Events:
         VisitorApi:
           Type: HttpApi
           Properties:
-            Path: /getVisitorCount
+            Path: /getSamVisitorCount
             Method: GET
+<<<<<<< HEAD
             ApiId: !Ref SamHttpVisitorApi
+=======
+      Environment:
+        Variables:
+          AWS_REGION: us-east-1
+>>>>>>> 2ab7e52 (Actualización en template.yaml: cambie al original que habia antes)
 
   SamVisitorCounterTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: visitor-counter-table-sam
+      TableName: SamVisitorCounterTable
       PrimaryKey:
         Name: id
         Type: String
 
 Outputs:
   ApiUrl:
+<<<<<<< HEAD
     Description: "HTTP API endpoint URL"
     Value: !Sub "https://${SamHttpVisitorApi}.execute-api.${AWS::Region}.amazonaws.com"
+=======
+    Description: "URL pública de la API para el contador de visitas"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getSamVisitorCount"
+>>>>>>> 2ab7e52 (Actualización en template.yaml: cambie al original que habia antes)
