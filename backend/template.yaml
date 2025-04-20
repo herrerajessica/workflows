@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Cloud Resume Challenge - Visitor Counter (SAM version)
+Description: Cloud Resume Challenge - Visitor Counter
 
 Globals:
   Function:
@@ -10,27 +10,28 @@ Globals:
     MemorySize: 128
 
 Resources:
-  VisitorCounterFunctionSAM:
+  SamVisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      FunctionName: visitor-counter-function-sam
+      FunctionName: SamVisitorCounterFunction
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: visitor-counter-table-sam
+            TableName: SamVisitorCounterTable
       Events:
         VisitorApi:
           Type: Api
           Properties:
-            Path: /getVisitorCount
+            Path: /getSamVisitorCount
             Method: GET
-   
-          
+      Environment:
+        Variables:
+          AWS_REGION: us-east-1
 
-  VisitorCounterTableSAM:
+  SamVisitorCounterTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: visitor-counter-table-sam
+      TableName: SamVisitorCounterTable
       PrimaryKey:
         Name: id
         Type: String
@@ -41,4 +42,4 @@ Resources:
 Outputs:
   ApiUrl:
     Description: "URL pública de la API para el contador de visitas"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getSamVisitorCount"
