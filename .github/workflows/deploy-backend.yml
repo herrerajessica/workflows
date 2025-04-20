@@ -31,6 +31,7 @@ jobs:
     - name: Run tests
       run: |
         source venv/bin/activate
+        export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
         pytest backend/tests/
 
     - name: Configure AWS credentials
