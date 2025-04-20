@@ -17,7 +17,7 @@ def setup_dynamodb():
             BillingMode="PAY_PER_REQUEST"
         )
         table.wait_until_exists()
-        yield  # Se ejecuta la prueba después de esta línea
+        yield  # Se ejecuta la pruebas después de esta línea
 
 def test_lambda_handler(setup_dynamodb):
     event = {
