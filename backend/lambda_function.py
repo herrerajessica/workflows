@@ -5,7 +5,7 @@ from decimal import Decimal
 
 def lambda_handler(event, context):
     try:
-        # Inicializar DynamoDB dentro de la función
+        # Inicializar DynamoDB dentro de la función prueba
         region = os.getenv('AWS_REGION', 'us-east-1')
         dynamodb = boto3.resource('dynamodb', region_name=region)
         table = dynamodb.Table('visitor-counter-table-sam')
