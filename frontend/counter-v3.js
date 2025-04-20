@@ -1,7 +1,7 @@
 console.log("counter-v2.js cargado correctamente");
 
 document.addEventListener("DOMContentLoaded", function () {
-  fetch('https://mb77h5uai8.execute-api.us-east-1.amazonaws.com/getVisitorCount')
+  fetch("https://s8ahp7qrhg.execute-api.us-east-1.amazonaws.com/Prod/getVisitorCount")
     .then(response => response.json())
     .then(data => {
       console.log("Respuesta completa de la API:", data);
