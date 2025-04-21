@@ -31,7 +31,7 @@ jobs:
 
       - name: Deploy to AWS using SAM
         run: |
-          sam build
+          sam build --template-file backend/template.yaml
           sam deploy --no-confirm-changeset --no-fail-on-empty-changeset \
             --stack-name visitor-counter-stack-sam \
             --capabilities CAPABILITY_IAM
