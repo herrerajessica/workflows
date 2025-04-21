@@ -46,7 +46,7 @@ jobs:
     - name: Build with SAM
       run: |
         cd backend
-        sam build
+        sam build --template-file backend/template.yaml
 
     - name: Deploy with SAM
       run: |
