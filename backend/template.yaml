@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Serverle backend for visitor counter using HTTP API
+Description: Visitor counter application using API Gateway (HTTP), Lambda, and DynamoDB.
 
 Globals:
   Function:
