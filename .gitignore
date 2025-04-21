@@ -1,30 +1,10 @@
-# Python bytecode
+# Ignorar archivos Python
 *.pyc
-*.pyo
-*.pyd
 __pycache__/
 
-# Database files
-*.db
-*.log
-
-# Environment files
-*.env
-.env
-
-# Virtual environment folder
+# Ignorar archivos de entornos virtuales
 venv/
 
-# AWS SAM deployment artifacts
-.aws-sam/
-
-# Other common temporary files
-*.zip
-*.tar.gz
-*.tgz
-
-# Git folder
-.git/
-
-# AWS SAM CLI managed files (bucket and temporary files)
-aws-sam-cli-managed-default-samclisourcebucket-*
+# Ignorar archivos de configuración de IDEs
+.vscode/
+.idea/
