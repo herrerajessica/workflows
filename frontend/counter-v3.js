@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("https://gs2i1t61g3.execute-api.us-east-1.amazonaws.com/Prod/getVisitorCount")
     .then(response => response.json())
     .then(data => {
-      console.log("Respuesta completa de la API:", data);
+      console.log("Respuesta completa de la API SAM:", data);
 
       const count = data.count; // aquí el cambio real
       console.log("Valor de visitas:", count);
