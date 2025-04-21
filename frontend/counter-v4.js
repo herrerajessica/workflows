@@ -1,4 +1,4 @@
-console.log("counter-v4.js cargado correctamentesss");
+console.log("counter-v4.js cargado correctamente prueba frontend");
 
 document.addEventListener("DOMContentLoaded", function () {
   fetch("https://zd5ii9hj9h.execute-api.us-east-1.amazonaws.com/getVisitorCount")
