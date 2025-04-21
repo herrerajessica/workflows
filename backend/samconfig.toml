@@ -7,4 +7,5 @@ s3_prefix = "visitor-counter-stack-sam"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
+disable_rollback = false
 image_repositories = []
