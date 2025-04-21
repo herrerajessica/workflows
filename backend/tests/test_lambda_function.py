@@ -3,7 +3,11 @@ import boto3
 import pytest
 from moto import mock_dynamodb
 
-from backend import lambda_function
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import lambda_function
 
 @pytest.fixture
 def setup_dynamodb():
