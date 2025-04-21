@@ -31,7 +31,6 @@ jobs:
     - name: Run tests
       run: |
         source venv/bin/activate
-        export PYTHONPATH=$PYTHONPATH:$(pwd)/backend
         pytest backend/tests/
 
     - name: Configure AWS credentials
@@ -52,4 +51,5 @@ jobs:
     - name: Deploy with SAM
       run: |
         cd backend
-        sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --capabilities CAPABILITY_IAM
+        sam deploy --template-file backend/template.yml
+        
