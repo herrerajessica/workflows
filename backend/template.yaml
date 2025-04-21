@@ -1,18 +1,24 @@
-
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: VisitorSSSsss counter application using API Gateway, Lambda, and DynamoDB.
+Description: Visitorssss counter application using API Gateway (HTTP), Lambda, and DynamoDB.
 
 Globals:
   Function:
     Timeout: 3
-  Api:
-    Cors:
-      AllowMethods: "'GET,OPTIONS'"
-      AllowHeaders: "'Content-Type'"
-      AllowOrigin: "'https://jessicaherreraflores.com'"
 
 Resources:
+  SamHttpVisitorApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+        AllowOrigins:
+          - https://jessicaherreraflores.com
+
   SamVisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -25,10 +31,11 @@ Resources:
           TABLE_NAME: visitor-counter-table-sam
       Events:
         VisitorApi:
-          Type: Api
+          Type: HttpApi
           Properties:
             Path: /getVisitorCount
             Method: GET
+            ApiId: !Ref SamHttpVisitorApi
 
   SamVisitorCounterTable:
     Type: AWS::Serverless::SimpleTable
@@ -40,5 +47,5 @@ Resources:
 
 Outputs:
   ApiUrl:
-    Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount"
+    Description: "HTTP API endpoint URL"
+    Value: !Sub "https://${SamHttpVisitorApi}.execute-api.${AWS::Region}.amazonaws.com"
