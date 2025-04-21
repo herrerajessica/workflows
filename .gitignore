@@ -1,9 +1,7 @@
-# Ignorar archivos Python
-*.pyc
+# .gitignore
+.venv/
 __pycache__/
+*.pyc
+.aws-sam/
+.env
 
-
-
-# Ignorar archivos de configuración de IDEs
-.vscode/
-.idea/
