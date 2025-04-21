@@ -2,8 +2,7 @@
 *.pyc
 __pycache__/
 
-# Ignorar archivos de entornos virtuales
-venv/
+
 
 # Ignorar archivos de configuración de IDEs
 .vscode/
