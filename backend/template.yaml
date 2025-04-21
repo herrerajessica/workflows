@@ -45,14 +45,17 @@ Resources:
             ApiId: !Ref VisitorApi
 
   SamVisitorCounterTable:
-    Type: AWS::Serverless::SimpleTable
+    Type: AWS::DynamoDB::Table  # Cambié de SimpleTable a DynamoDB::Table
     Properties:
       TableName: visitor-counter-table-sam
-      PrimaryKey:
-        Name: id
-        Type: String
-      BillingMode: PAY_PER_REQUEST  # Asegúrate de que esté definida correctamente
-      SSESpecification:  # Si deseas habilitar cifrado, agrega esto
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification: 
         SSEEnabled: true
 
 Outputs:
