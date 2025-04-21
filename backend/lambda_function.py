@@ -1,6 +1,8 @@
 import json
 import boto3
 import os
+
+
 from decimal import Decimal
 
 def lambda_handler(event, context):
@@ -26,5 +28,5 @@ def lambda_handler(event, context):
     except Exception as e:
         return {
             "statusCode": 500,
-            "body": json.dumps({"error": str(e)})  # Capturar el error para verlo en los logs
+            "body": json.dumps({"error": str(e)})  # Capturar el error para verlo en los logsssss
         }
