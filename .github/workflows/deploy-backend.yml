@@ -1,4 +1,4 @@
-name: Deploy backendsss with SAM
+name: Deploy backends with SAM
 
 on:
   push:
