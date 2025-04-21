@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Visitor counter application using API Gateway, Lambda, and DynamoDB.
+Globals:
+  Function:
+    Timeout: 3
+  Api:
+    Cors:
+      AllowMethods: '''GET,OPTIONS'''
+      AllowHeaders: '''Content-Type'''
+      AllowOrigin: '''https://jessicaherreraflores.com'''
+Resources:
+  SamVisitorCounterFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: SamVisitorCounterFunction
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.11
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLE_NAME: visitor-counter-table-sam
+      Events:
+        VisitorApi:
+          Type: Api
+          Properties:
+            Path: /getVisitorCount
+            Method: GET
+    Metadata:
+      SamResourceId: SamVisitorCounterFunction
+  SamVisitorCounterTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: visitor-counter-table-sam
+      PrimaryKey:
+        Name: id
+        Type: String
+Outputs:
+  ApiUrl:
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getVisitorCount

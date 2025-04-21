@@ -1,7 +1,7 @@
 
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Visitor counter application using API Gateway, Lambda, and DynamoDB.
+Description: VisitorSSS counter application using API Gateway, Lambda, and DynamoDB.
 
 Globals:
   Function:

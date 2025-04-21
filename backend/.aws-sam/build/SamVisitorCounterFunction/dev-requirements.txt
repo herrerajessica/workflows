@@ -1,0 +1,2 @@
+
+moto[dynamodb2]==4.2.8
