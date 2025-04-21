@@ -2,8 +2,8 @@ import json
 import boto3
 import pytest
 from moto import mock_dynamodb
-import lambda_function
 
+from backend import lambda_function
 @pytest.fixture
 def setup_dynamodb():
     with mock_dynamodb():
