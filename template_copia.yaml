@@ -1,45 +1,61 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Cloud Resume Challenge - Visitor Counter
+Description: Serverless backend for visitor counter using HTTP API
 
 Globals:
   Function:
-    Timeout: 5
-    Runtime: python3.11
-    Handler: lambda_function.lambda_handler
-    MemorySize: 128
+    Timeout: 3
+  Api:
+    Cors:
+      AllowMethods: "'GET,OPTIONS'"
+      AllowHeaders: "'Content-Type'"
+      AllowOrigin: "'https://jessicaherreraflores.com'"
 
 Resources:
+  VisitorApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowMethods:
+          - GET
+        AllowOrigins:
+          - https://jessicaherreraflores.com
+        AllowHeaders:
+          - Content-Type
+
   SamVisitorCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      FunctionName: SamVisitorCounterFunction
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.11
+      Timeout: 3
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: SamVisitorCounterTable
-      Events:
-        VisitorApi:
-          Type: Api
-          Properties:
-            Path: /getSamVisitorCount
-            Method: GET
+            TableName: !Ref SamVisitorCounterTable
       Environment:
         Variables:
-          AWS_REGION: us-east-1
+          TABLE_NAME: visitor-counter-table-sam
+      Events:
+        VisitorApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /getVisitorCount
+            Method: GET
+            ApiId: !Ref VisitorApi
 
   SamVisitorCounterTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
-      TableName: SamVisitorCounterTable
+      TableName: visitor-counter-table-sam
       PrimaryKey:
         Name: id
         Type: String
-      ProvisionedThroughput:
-        ReadCapacityUnits: 1
-        WriteCapacityUnits: 1
+      BillingMode: PAY_PER_REQUEST  # Asegúrate de que esté definida correctamente
+      SSESpecification:  # Si deseas habilitar cifrado, agrega esto
+        SSEEnabled: true
 
 Outputs:
   ApiUrl:
-    Description: "URL pública de la API para el contador de visitas"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/getSamVisitorCount"
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${VisitorApi}.execute-api.${AWS::Region}.amazonaws.com/getVisitorCount"
